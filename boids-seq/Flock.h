@@ -7,7 +7,7 @@
 #include<list>
 #include<vector>
 #include "Structures.h"
-
+#include "Boid.h"
 
 #define CELL_SIZE 32
 #define MAX_SPEED 100
@@ -17,18 +17,11 @@ class Flock {
   int field_size;
   int row_size;
 
-  list<Point2D> boids_positions;
-  list<Vector2D> boids_separations;
-  list<Vector2D> boids_aligments;
-  list<Vector2D> boids_cohesions;
-
-  list<Vector2D> boids_accelerations;
-  list<Vector2D> boids_velocities;
+  Boid* flock;
   vector< vector<int> > cell_boid_table;
   public:
     Flock (){};
     Flock (int,int);
-    list<Point2D> get_flock_positions(){return boids_positions; }; 
 
   private:
     void breed_boids();

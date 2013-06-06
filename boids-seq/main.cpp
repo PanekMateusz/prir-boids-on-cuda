@@ -25,17 +25,8 @@ int main(int argc, char** argv){
   }
 
   Flock flock (WINDOW_SIZE, NUM_BOIDS);
-  Frame frame;
-  list<Point2D> boids_positions = flock.get_flock_positions();
-  ofstream ofs("frame.xml");
-  assert(ofs.good());
-  boost::archive::xml_oarchive oa(ofs);
   
-  frame.set_positions(boids_positions); 
-
-  oa & BOOST_SERIALIZATION_NVP(frame);
-  int row = WINDOW_SIZE/32;
-
   printf("Okno ma rozmiar: %dx%d, posiada %d boidów, pracuje max %ds lub aż wygeneruje %d klatek\n",WINDOW_SIZE, WINDOW_SIZE, NUM_BOIDS, MAX_TIME, NUM_FRAMES);
   return 1;
 }
+

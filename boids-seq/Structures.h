@@ -7,23 +7,12 @@
 #include <string>
 #include <list>
 
-#include <boost/serialization/list.hpp>
-#include <boost/archive/xml_oarchive.hpp>
-#include <boost/archive/xml_iarchive.hpp>
 #include <cmath>
 
 using namespace std;
 
 class Vector2D
 {
-private:
-  friend class boost::serialization::access;
-  template<class Archive>
-  void serialize(Archive & ar, const unsigned int version)
-  {
-    ar & BOOST_SERIALIZATION_NVP(x)
-       & BOOST_SERIALIZATION_NVP(y);
-  }
 
 public:
   float x;
@@ -37,15 +26,6 @@ public:
 
 class Point2D
 {
-private:
-  friend class boost::serialization::access;
-  template<class Archive> 
-  void serialize(Archive & ar, const unsigned int version)
-  {
-    ar & BOOST_SERIALIZATION_NVP(x)
-       & BOOST_SERIALIZATION_NVP(y);
-  }
-
 public:
   int x;
   int y;
@@ -55,14 +35,6 @@ public:
 
 class Frame
 {
-private:
-  friend class boost::serialization::access;  
-  template<class Archive>
-  void serialize(Archive & ar, const unsigned int version)
-  {
-    ar & BOOST_SERIALIZATION_NVP(positions);
-  }
-
 public:
   list<Point2D>positions;
   list<Vector2D>separations;
@@ -72,5 +44,8 @@ public:
   void add_point(Point2D);
   void add_point();
   void set_positions(list<Point2D> l){positions = l;};
+  void set_separations(list<Vector2D> l){separations = l;};
+  void set_alignments(list<Vector2D> l){alignments = l;};
+  void set_cohesions(list<Vector2D> l){cohesions = l;};
 };
 #endif

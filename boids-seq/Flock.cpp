@@ -5,6 +5,8 @@
     row_size =  window_size / CELL_SIZE;
     field_size = window_size;
     size = num_boids;
+
+    flock = (Boid*)malloc(size*sizeof(Boid));
     cell_boid_table.reserve(row_size*row_size);
     breed_boids();
   }
@@ -17,16 +19,11 @@ void Flock::breed_boids(){
   for(i=0; i<size; i++){
     int x = rand()%(field_size+1);
     int y = rand()%(field_size+1);
-    boids_positions.push_back(Point2D(x, y));
-    boids_separations.push_back(Vector2D(0, 0));
-    boids_aligments.push_back(Vector2D(0, 0));
-    boids_cohesions.push_back(Vector2D(0, 0));
-
+    
+    flock[i] = Boid (x, y);
     insert_boid(x, y, i);
     x = rand()%(2*MAX_SPEED)-MAX_SPEED;
     y = rand()%(2*MAX_SPEED)-MAX_SPEED;
-    boids_accelerations.push_back(Vector2D(0, 0));
-    boids_velocities.push_back(Vector2D(x, y));
   }
 }
 
@@ -41,7 +38,7 @@ void Flock::insert_boid(int x, int y, int id){
   {
     y -= field_size;
   }
-//oczko zawierające boidai
+//oczko zawierające boida
   y = y/CELL_SIZE;
   x = x/CELL_SIZE;
 
