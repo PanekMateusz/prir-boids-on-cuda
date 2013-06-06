@@ -19,6 +19,10 @@ void Flock::breed_boids(){
     int y = rand()%(field_size+1);
     boids_positions.push_back(Point2D(x, y));
     insert_boid(x, y, i);
+    x = rand()%(2*MAX_SPEED)-MAX_SPEED;
+    y = rand()%(2*MAX_SPEED)-MAX_SPEED;
+    boids_accelerations.push_back(Vector2D(0, 0));
+    boids_velocities.push_back(Vector2D(x, y));
   }
 }
 
@@ -39,5 +43,5 @@ void Flock::insert_boid(int x, int y, int id){
 
   cell = y*row_size+x;
 //umieść w tablicy cell/boid
-    cell_boid_table[cell].push_back(id);
+  cell_boid_table[cell].push_back(id);
 }

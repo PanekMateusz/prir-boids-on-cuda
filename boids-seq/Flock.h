@@ -9,7 +9,8 @@
 #include "Structures.h"
 
 
-#define CELL_SIZE 32;
+#define CELL_SIZE 32
+#define MAX_SPEED 100
 
 class Flock {
   int size;
@@ -17,6 +18,8 @@ class Flock {
   int row_size;
 
   list<Point2D> boids_positions;
+  list<Vector2D> boids_accelerations;
+  list<Vector2D> boids_velocities;
   vector< vector<int> > cell_boid_table;
   public:
     Flock (){};
