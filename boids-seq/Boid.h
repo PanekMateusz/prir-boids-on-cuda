@@ -9,7 +9,8 @@ class Boid{
   Point2D position;
 
   public:
+    Boid(){};
     Boid(int, int);
+    Point2D get_position(){return position; };
 };
-
 #endif

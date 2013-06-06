@@ -1,28 +1,30 @@
 #include "Structures.h"
-  template<class Archive>
-  void Point2D::serialize(Archive & ar, const unsigned int version)
-  {
-    ar & x;
-    ar & y;
-  }
-
+ 
   Point2D::Point2D(int a, int b)
   {
     x = a;
     y = b;
   }
 
-  template<class Archive>
-  void Frame::serialize(Archive & ar, const unsigned int version)
-  {
-    ar & pos;
+  float Vector2D::getAngle()
+  { //v2 = {1,0}
+    //angle(v1, v2) = acos( (v1x * v2x + v1y * v2y) / (sqrt(v1x^2+v1y^2) * sqrt(v2x^2+v2y^2)) )
+    return acos( x/(sqrt(x*x+y*y)) );
   }
 
-  Frame::Frame(int len)
+  void Frame::addPoint(Point2D point)
   {
-    for(int i = 0; i < len; i++)
-    {
-      Point2D point(i, len-i-1);
-      pos.push_back(point);
-    }
+      positions.push_back(point);
+      separations.push_back(Vector2D(0,0));
+      alignments.push_back(Vector2D(0,0));
+      cohesions.push_back(Vector2D(0,0));
   }
+
+  void Frame::addPoint()
+  {
+      positions.push_back(Point2D(0,0));
+      separations.push_back(Vector2D(0,0));
+      alignments.push_back(Vector2D(0,0));
+      cohesions.push_back(Vector2D(0,0));
+  }
+

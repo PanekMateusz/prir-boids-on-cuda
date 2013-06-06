@@ -5,7 +5,6 @@
 #include<stdlib.h>
 #include<math.h>
 #include "Boid.h"
-
 #define CELL_SIZE 32;
 
 class Flock {
@@ -15,7 +14,9 @@ class Flock {
   Boid* boids;
 
   public:
+    Flock (){};
     Flock (int,int);
+    Boid* get_flock(){return boids; };
 
   private:
     void breed_boids();

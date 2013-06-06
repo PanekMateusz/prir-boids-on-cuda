@@ -1,5 +1,5 @@
 #include "Flock.h"
-
+  
   Flock::Flock(int window_size, int num_boids){
     int i;
     int row_size =  window_size / CELL_SIZE;
