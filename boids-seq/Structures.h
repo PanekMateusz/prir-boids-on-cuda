@@ -28,8 +28,8 @@ private:
 public:
   float x;
   float y;
-  inline float getLength() { return sqrt(x*x+y*y); };
-  float getAngle(); 
+  inline float get_length() { return sqrt(x*x+y*y); };
+  float get_angle(); 
   Vector2D(){};
   Vector2D(float , float);
   Vector2D operator+ (Vector2D &addend) {return Vector2D(x+addend.x, y+addend.y); };  //yup, lubimy przeciążać te oczywiste operatory
@@ -60,16 +60,16 @@ private:
   template<class Archive>
   void serialize(Archive & ar, const unsigned int version)
   {
-    ar & BOOST_SERIALIZATION_NVP(pos);
+    ar & BOOST_SERIALIZATION_NVP(positions);
   }
 
 public:
   list<Point2D>positions;
-  list<Vector2D>separetions;
+  list<Vector2D>separations;
   list<Vector2D>alignments;
   list<Vector2D>cohesions;
   Frame(){};
-  void addPoint(Point2D);
-  void addPoint();
+  void add_point(Point2D);
+  void add_point();
 };
 #endif

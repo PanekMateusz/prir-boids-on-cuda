@@ -36,7 +36,7 @@ int main(int argc, char** argv){
     frame.add_point(boids[i].get_position()); 
   }
 
-  for( list<Point2D>::iterator iter=frame.pos.begin(); iter != frame.pos.end(); iter++){
+  for( list<Point2D>::iterator iter=frame.positions.begin(); iter != frame.positions.end(); iter++){
     printf("hop %d\n",(*iter).x);
   }
   oa & BOOST_SERIALIZATION_NVP(frame);
