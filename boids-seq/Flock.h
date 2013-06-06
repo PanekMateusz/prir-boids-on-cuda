@@ -5,17 +5,20 @@
 #include<stdlib.h>
 #include<math.h>
 #include<list>
+#include<vector>
 #include "Structures.h"
+
 
 #define CELL_SIZE 32;
 
 class Flock {
   int size;
   int field_size;
-  list<Point2D> boids_positions;
+  int row_size;
 
+  list<Point2D> boids_positions;
+  vector< vector<int> > cell_boid_table;
   public:
-  int** cell_boid_table;
     Flock (){};
     Flock (int,int);
     list<Point2D> get_flock_positions(){return boids_positions; }; 

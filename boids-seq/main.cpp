@@ -31,19 +31,11 @@ int main(int argc, char** argv){
   assert(ofs.good());
   boost::archive::xml_oarchive oa(ofs);
   
-
   frame.set_positions(boids_positions); 
 
-  for( list<Point2D>::iterator iter=frame.positions.begin(); iter != frame.positions.end(); iter++){
-    printf("hop %d  %d\n",(*iter).x, (*iter).y);
-  }
   oa & BOOST_SERIALIZATION_NVP(frame);
-  for(int i=0; i< (WINDOW_SIZE/32); i++){
-    for(int j=0 ; j< (WINDOW_SIZE/32); j++){
-      printf("%d ", flock.cell_boid_table[i][j]);
-    }
-    printf("\n");
-  }
+  int row = WINDOW_SIZE/32;
+
   printf("Okno ma rozmiar: %dx%d, posiada %d boidów, pracuje max %ds lub aż wygeneruje %d klatek\n",WINDOW_SIZE, WINDOW_SIZE, NUM_BOIDS, MAX_TIME, NUM_FRAMES);
   return 1;
 }
