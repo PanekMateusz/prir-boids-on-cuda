@@ -18,6 +18,10 @@ void Flock::breed_boids(){
     int x = rand()%(field_size+1);
     int y = rand()%(field_size+1);
     boids_positions.push_back(Point2D(x, y));
+    boids_separations.push_back(Vector2D(0, 0));
+    boids_aligments.push_back(Vector2D(0, 0));
+    boids_cohesions.push_back(Vector2D(0, 0));
+
     insert_boid(x, y, i);
     x = rand()%(2*MAX_SPEED)-MAX_SPEED;
     y = rand()%(2*MAX_SPEED)-MAX_SPEED;

@@ -18,6 +18,10 @@ class Flock {
   int row_size;
 
   list<Point2D> boids_positions;
+  list<Vector2D> boids_separations;
+  list<Vector2D> boids_aligments;
+  list<Vector2D> boids_cohesions;
+
   list<Vector2D> boids_accelerations;
   list<Vector2D> boids_velocities;
   vector< vector<int> > cell_boid_table;
