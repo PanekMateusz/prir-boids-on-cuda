@@ -71,5 +71,6 @@ public:
   Frame(){};
   void add_point(Point2D);
   void add_point();
+  void set_positions(list<Point2D> l){positions = l;};
 };
 #endif

@@ -7,7 +7,6 @@
     size = num_boids;
 
 //Lista boidów
-    boids = (Boid*)malloc(size*sizeof(Boid));
 //Alokacja pamięci na tabelę cells/boids
     cell_boid_table = (int**)malloc(row_size*sizeof(int*));
     for(i=0; i<row_size; i++){
@@ -20,6 +19,6 @@
 void Flock::breed_boids(){
   int i;
   for(i=0; i<size; i++){
-    boids[i] = Boid(rand()%(field_size+1), rand()%(field_size+1));    
+    boids_positions.push_back(Point2D (rand()%(field_size+1), rand()%(field_size+1)));    
   }
 }

@@ -4,19 +4,22 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<math.h>
-#include "Boid.h"
+#include<list>
+#include "Structures.h"
+
 #define CELL_SIZE 32;
 
 class Flock {
   int** cell_boid_table;
   int size;
   int field_size;
-  Boid* boids;
+  list<Point2D> boids_positions;
 
   public:
     Flock (){};
     Flock (int,int);
-    Boid* get_flock(){return boids; };
+    list<Point2D> get_flock_positions(){return boids_positions; };
+    
 
   private:
     void breed_boids();

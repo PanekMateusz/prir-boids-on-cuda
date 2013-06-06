@@ -26,15 +26,13 @@ int main(int argc, char** argv){
 
   Flock flock (WINDOW_SIZE, NUM_BOIDS);
   Frame frame;
-  Boid* boids = flock.get_flock();
+  list<Point2D> boids_positions = flock.get_flock_positions();
   ofstream ofs("frame.xml");
   assert(ofs.good());
   boost::archive::xml_oarchive oa(ofs);
   
-  for(int i=0; i<NUM_BOIDS; i++){
 
-    frame.add_point(boids[i].get_position()); 
-  }
+  frame.set_positions(boids_positions); 
 
   for( list<Point2D>::iterator iter=frame.positions.begin(); iter != frame.positions.end(); iter++){
     printf("hop %d\n",(*iter).x);

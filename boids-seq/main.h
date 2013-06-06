@@ -13,6 +13,5 @@
 
 #include "Flock.h"
 #include "Structures.h"
-#include "Boid.h"
 
 #endif
