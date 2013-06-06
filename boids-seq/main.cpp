@@ -5,6 +5,12 @@ int NUM_BOIDS;
 int MAX_TIME;
 int NUM_FRAMES;
 
+void print_flock(Flock f){//debbuging purpose
+  for(int i=0; i<NUM_BOIDS; i++){
+    printf("B%d: x:%d, y:%d\n",i, f.flock[i].get_position().x, f.flock[i].get_position().y);
+    
+  }
+}
 int main(int argc, char** argv){
 
 //Pobierz ustawienia poczatkowe z wejścia
@@ -25,7 +31,8 @@ int main(int argc, char** argv){
   }
 
   Flock flock (WINDOW_SIZE, NUM_BOIDS);
-  
+  print_flock(flock);
+  flock.update_flock();
   printf("Okno ma rozmiar: %dx%d, posiada %d boidów, pracuje max %ds lub aż wygeneruje %d klatek\n",WINDOW_SIZE, WINDOW_SIZE, NUM_BOIDS, MAX_TIME, NUM_FRAMES);
   return 1;
 }

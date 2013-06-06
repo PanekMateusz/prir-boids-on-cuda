@@ -10,21 +10,22 @@
 #include "Boid.h"
 
 #define CELL_SIZE 32
-#define MAX_SPEED 100
 
 class Flock {
   int size;
   int field_size;
   int row_size;
 
-  Boid* flock;
+  vector< vector<int> > neighbours;
   vector< vector<int> > cell_boid_table;
   public:
+    Boid* flock;
     Flock (){};
     Flock (int,int);
-
+    void update_flock();
   private:
     void breed_boids();
     void insert_boid(int,int,int);
+    vector<int> find_near(int, int, int);
 };
 #endif
