@@ -10,18 +10,18 @@
 #define CELL_SIZE 32;
 
 class Flock {
-  int** cell_boid_table;
   int size;
   int field_size;
   list<Point2D> boids_positions;
 
   public:
+  int** cell_boid_table;
     Flock (){};
     Flock (int,int);
-    list<Point2D> get_flock_positions(){return boids_positions; };
-    
+    list<Point2D> get_flock_positions(){return boids_positions; }; 
 
   private:
     void breed_boids();
+    void insert_boid(int,int,int);
 };
 #endif
