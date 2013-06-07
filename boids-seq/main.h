@@ -7,6 +7,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sys/time.h>
 
 #include "Flock.h"
 #include "Structures.h"

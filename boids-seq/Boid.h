@@ -10,6 +10,7 @@
 
 class Boid{
   Point2D position;
+  public:
   Vector2D velocity;
   Vector2D acceleration;
   Vector2D separate_force;

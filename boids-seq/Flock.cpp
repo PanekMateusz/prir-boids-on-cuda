@@ -48,20 +48,15 @@ void Flock::insert_boid(int x, int y, int id){
   cell_boid_table[cell].push_back(id);
 }
 
-void Flock::update_flock(){
+void Flock::update_flock(double time){
   for(int i=0; i<size; i++){
-    Boid b = flock[i];
-    vector<int> near_boids = find_near(b.get_position().x, b.get_position().y, i);
+    vector<int> near_boids = find_near(flock[i].get_position().x, flock[i].get_position().y, i);
     neighbours[i] = near_boids;
     for(int j=0; j < near_boids.size(); j++){
-      b.interact(flock[near_boids[j]]);
+      flock[i].interact(flock[near_boids[j]]);
     }
-    b.sum_forces(near_boids.size());
-    if(near_boids.empty() == false){
-      for(int x=0; x< near_boids.size(); x++){
-        printf("B%d nei: %d\n", i, near_boids[x]);
-      }
-    }
+    flock[i].sum_forces(near_boids.size());
+    flock[i].update(time);
   }
 }
 

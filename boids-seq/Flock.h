@@ -16,13 +16,13 @@ class Flock {
   int field_size;
   int row_size;
 
-  vector< vector<int> > neighbours;
   vector< vector<int> > cell_boid_table;
   public:
+    vector< vector<int> > neighbours;
     Boid* flock;
     Flock (){};
     Flock (int,int);
-    void update_flock();
+    void update_flock(double);
   private:
     void breed_boids();
     void insert_boid(int,int,int);

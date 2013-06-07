@@ -5,11 +5,47 @@ int NUM_BOIDS;
 int MAX_TIME;
 int NUM_FRAMES;
 
+ofstream json;
+
 void print_flock(Flock f){//debbuging purpose
   for(int i=0; i<NUM_BOIDS; i++){
     printf("B%d: x:%d, y:%d\n",i, f.flock[i].get_position().x, f.flock[i].get_position().y);
     
   }
+}
+
+void write_frame(Flock f){
+//wspolrzedne x
+  json << "\"boids\": {\n \"x\": [";
+  for(int i=0; i<NUM_BOIDS; i++){
+    json << f.flock[i].get_position().x;
+    if(i< NUM_BOIDS-1)
+      json <<", ";
+  }
+  json << "],\n";
+
+//wspolrzedne y
+  json << "\"y\": [";
+  for(int i=0; i<NUM_BOIDS; i++){
+    json << f.flock[i].get_position().y;
+    if(i< NUM_BOIDS-1)
+      json <<", ";
+  }
+  json << "],\n";
+//sasiedzi
+  json << "\"neighbours\": [\n";
+  for(int i=0; i<NUM_BOIDS; i++){
+    json << "[";
+    if( f.neighbours.empty() == false ){
+      for(int j=0; j<f.neighbours[i].size(); j++){
+        json << f.neighbours[i][j];
+        if(j< f.neighbours[i].size()-1)
+          json <<", ";
+      }
+    }
+    json << "],\n";
+  }
+  json << "],\n},\n";
 }
 int main(int argc, char** argv){
 
@@ -31,8 +67,133 @@ int main(int argc, char** argv){
   }
 
   Flock flock (WINDOW_SIZE, NUM_BOIDS);
-  print_flock(flock);
-  flock.update_flock();
+  struct timeval start, end;
+  double delta = 0;
+
+  json.open ("animation.json");
+  json << "{\n \"screen\": {\n \"width\": " << WINDOW_SIZE << ",\n \"height\": " << WINDOW_SIZE << "\n },\n";
+  json << "\"boids\": {\n \"count\": " << NUM_BOIDS << ",\n \"influance_range\": 32\n },\n \"frames\": [\n";
+
+  for(int i=0; i<NUM_FRAMES; i++){
+    gettimeofday(&start, NULL);
+    flock.update_flock(delta);
+
+
+ //wspolrzedne x
+  json << "\"boids\": {\n \"x\": [";
+  for(int i=0; i<NUM_BOIDS; i++){
+    json << flock.flock[i].get_position().x;
+    if(i< NUM_BOIDS-1)
+      json <<", ";
+  }
+  json << "],\n";
+
+//wspolrzedne y
+  json << "\"y\": [";
+  for(int i=0; i<NUM_BOIDS; i++){
+    json << flock.flock[i].get_position().y;
+    if(i< NUM_BOIDS-1)
+      json <<", ";
+  }
+  json << "],\n";
+//sasiedzi
+  json << "\"neighbours\": [\n";
+  for(int i=0; i<NUM_BOIDS; i++){
+    json << "[";
+    if( flock.neighbours[i].empty() == false ){
+      for(int j=0; j<flock.neighbours[i].size(); j++){
+        json << flock.neighbours[i][j];
+        if(j< flock.neighbours[i].size()-1)
+          json <<", ";
+      }
+    }
+    json << "],\n";
+  }
+  json << "],\n},\n";
+//forces
+  json << "\"forces\": {\n";
+//cohesion
+  json << "\"cohesion\": {\n";
+   //wspolrzedne x
+  json << "\"x\": [";
+  for(int i=0; i<NUM_BOIDS; i++){
+    json << flock.flock[i].cohesion_force.x;
+    if(i< NUM_BOIDS-1)
+      json <<", ";
+  }
+  json << "],\n";
+
+//wspolrzedne y
+  json << "\"y\": [";
+  for(int i=0; i<NUM_BOIDS; i++){
+    json << flock.flock[i].cohesion_force.y;
+    if(i< NUM_BOIDS-1)
+      json <<", ";
+  }
+  json << "]\n}\n";
+//separation
+  json << "\"separation\": {\n";
+   //wspolrzedne x
+  json << "\"x\": [";
+  for(int i=0; i<NUM_BOIDS; i++){
+    json << flock.flock[i].separate_force.x;
+    if(i< NUM_BOIDS-1)
+      json <<", ";
+  }
+  json << "],\n";
+
+//wspolrzedne y
+  json << "\"y\": [";
+  for(int i=0; i<NUM_BOIDS; i++){
+    json << flock.flock[i].separate_force.y;
+    if(i< NUM_BOIDS-1)
+      json <<", ";
+  }
+  json << "]\n}\n";
+//alignment
+  json << "\"alignment\": {\n";
+   //wspolrzedne x
+  json << "\"x\": [";
+  for(int i=0; i<NUM_BOIDS; i++){
+    json << flock.flock[i].align_force.x;
+    if(i< NUM_BOIDS-1)
+      json <<", ";
+  }
+  json << "],\n";
+
+//wspolrzedne y
+  json << "\"y\": [";
+  for(int i=0; i<NUM_BOIDS; i++){
+    json << flock.flock[i].align_force.y;
+    if(i< NUM_BOIDS-1)
+      json <<", ";
+  }
+  json << "]\n}\n";
+//velocity
+  json << "\"velocity\": {\n";
+   //wspolrzedne x
+  json << "\"x\": [";
+  for(int i=0; i<NUM_BOIDS; i++){
+    json << flock.flock[i].velocity.x;
+    if(i< NUM_BOIDS-1)
+      json <<", ";
+  }
+  json << "],\n";
+
+//wspolrzedne y
+  json << "\"y\": [";
+  for(int i=0; i<NUM_BOIDS; i++){
+    json << flock.flock[i].velocity.y;
+    if(i< NUM_BOIDS-1)
+      json <<", ";
+  }
+  json << "]\n}\n";
+
+
+    gettimeofday(&end, NULL);
+    //delta = (end.tv_usec - start.tv_usec);
+    delta= 2;
+  }
 
   printf("Okno ma rozmiar: %dx%d, posiada %d boidów, pracuje max %ds lub aż wygeneruje %d klatek\n",WINDOW_SIZE, WINDOW_SIZE, NUM_BOIDS, MAX_TIME, NUM_FRAMES);
   return 1;
