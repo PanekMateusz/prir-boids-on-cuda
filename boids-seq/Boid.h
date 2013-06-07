@@ -6,7 +6,7 @@
 #include<vector>
 
 #define MAX_SPEED 100
-#define RANGE 32
+#define RANGE 16 
 
 class Boid{
   Point2D position;

@@ -22,7 +22,7 @@ void Flock::breed_boids(){
     int y = rand()%(field_size+1);
     Boid b (x, y); 
     flock[i] = b;
-    insert_boid(x, y, i);
+    //insert_boid(x, y, i);
     x = rand()%(2*MAX_SPEED)-MAX_SPEED;
     y = rand()%(2*MAX_SPEED)-MAX_SPEED;
   }
@@ -49,20 +49,24 @@ void Flock::insert_boid(int x, int y, int id){
 }
 
 void Flock::update_flock(double time){
+  rebuild_table();
+  vector<int> near_boids;
   for(int i=0; i<size; i++){
-    vector<int> near_boids = find_near(flock[i].get_position().x, flock[i].get_position().y, i);
+    near_boids.clear();
+    near_boids = find_near(flock[i].get_position().x, flock[i].get_position().y, i);
     neighbours[i] = near_boids;
     for(int j=0; j < near_boids.size(); j++){
       flock[i].interact(flock[near_boids[j]]);
     }
     flock[i].sum_forces(near_boids.size());
     flock[i].update(time);
+    near_boids.clear();
   }
 }
 
 vector<int> Flock::find_near(int x, int y, int id){
   int cell_i, cell_j;
-  vector<int> near_boids;
+  vector<int> n_b;
   int cell = (y/CELL_SIZE)*row_size+(x/CELL_SIZE);
   int i = cell/row_size;
   int j = cell- (i*row_size);
@@ -86,12 +90,33 @@ vector<int> Flock::find_near(int x, int y, int id){
       } 
       for(int k=0; k < cell_boid_table[(cell_i*row_size)+cell_j].size(); k++){ //boidy wewnątrz sąsiadującej komórki
         int neighbour_boid = cell_boid_table[(cell_i*row_size)+cell_j][k];
-        double distance = sqrt( (flock[neighbour_boid].get_position().x - x)*(flock[neighbour_boid].get_position().x - x) + (flock[neighbour_boid].get_position().y - y)*(flock[neighbour_boid].get_position().y - y) );
-	if(distance <= CELL_SIZE && neighbour_boid != id){
-	  near_boids.push_back(neighbour_boid);
+        double distance, distance_x, distance_y;
+	distance_x = abs(flock[neighbour_boid].get_position().x - x);
+	distance_y = abs(flock[neighbour_boid].get_position().y - y);
+	if(jj <0){
+          distance_x -= field_size;
+	}
+	if(ii < 0){
+          distance_y -= field_size;
+	}
+  	distance = sqrt( distance_x*distance_x + distance_y*distance_y );
+	if(distance <= CELL_SIZE/2 && neighbour_boid != id){
+	  n_b.push_back(neighbour_boid);
 	}
       }
     }
   }
-  return near_boids;
+
+  return n_b;
+}
+
+void Flock::rebuild_table(){
+  
+  for(int i=0; i<row_size*row_size; i++){
+    cell_boid_table[i].clear();
+  }
+  for(int i=0; i<size; i++){
+    neighbours[i].clear();
+    insert_boid(flock[i].get_position().x, flock[i].get_position().y, i);  
+  }
 }
