@@ -48,3 +48,12 @@ void Boid::sum_forces(int size){
   acceleration = acceleration + force;
 }
 
+void Boid::update(double time){
+  acceleration.x *= time;  
+  acceleration.y *= time; 
+
+  velocity = velocity + acceleration;
+
+  position.x += velocity.x * time;
+  position.y += velocity.y * time;
+}
