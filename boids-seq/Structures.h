@@ -31,6 +31,7 @@ public:
   int y;
   Point2D(){};
   Point2D(int , int );
+  Point2D operator+ (Point2D &addend) {return Point2D(x+addend.x, y+addend.y); };  
 };
 
 class Frame

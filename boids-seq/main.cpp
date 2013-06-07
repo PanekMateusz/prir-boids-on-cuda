@@ -33,6 +33,7 @@ int main(int argc, char** argv){
   Flock flock (WINDOW_SIZE, NUM_BOIDS);
   print_flock(flock);
   flock.update_flock();
+
   printf("Okno ma rozmiar: %dx%d, posiada %d boidów, pracuje max %ds lub aż wygeneruje %d klatek\n",WINDOW_SIZE, WINDOW_SIZE, NUM_BOIDS, MAX_TIME, NUM_FRAMES);
   return 1;
 }
