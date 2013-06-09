@@ -26,6 +26,6 @@ class Boid{
     Vector2D get_velocity(){return velocity; };
     void interact(Boid);
     void sum_forces(int);
-    void update(double);
+    void update(double, int);
 };
 #endif

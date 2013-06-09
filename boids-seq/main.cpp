@@ -155,9 +155,10 @@ int main(int argc, char** argv){
   gettimeofday(&start, NULL);
   
   for(int i=0; i<NUM_FRAMES; i++){
-    
+    printf("update frame: %d\n", i); 
     flock.update_flock(delta);
 
+    printf("write frame:%d\n", i); 
     write_frame(&flock);
     gettimeofday(&end, NULL);
     if(end.tv_sec - start.tv_sec >= MAX_TIME){

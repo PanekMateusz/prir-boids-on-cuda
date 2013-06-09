@@ -6,6 +6,10 @@ Boid::Boid(int x, int y){
   int b  = rand()%(2*MAX_SPEED)-MAX_SPEED;
   velocity = Vector2D(a, b);
   acceleration = Vector2D(0, 0);
+  separate_force = Vector2D(0, 0);
+  align_force = Vector2D(0, 0);
+  cohesion_sum = Point2D(0, 0);
+  cohesion_force = Vector2D(0, 0);
 }
 
 void Boid::interact(Boid b){
@@ -48,12 +52,22 @@ void Boid::sum_forces(int size){
   acceleration = acceleration + force;
 }
 
-void Boid::update(double time){
+void Boid::update(double time, int field){
   acceleration.x *= time;  
   acceleration.y *= time; 
 
   velocity = velocity + acceleration;
 
-  position.x += velocity.x * time;
+  position.x += velocity.x * time; //nowe pozycje + upewnij się że zotajesz w polu
+  if( position.x >= field){
+    position.x -= field;
+  }else if( position.x < 0 ){
+    position.x += field;
+  }
   position.y += velocity.y * time;
+  if( position.y >= field){
+    position.y -= field;
+  }else if( position.y < 0 ){
+    position.y += field;
+  }
 }

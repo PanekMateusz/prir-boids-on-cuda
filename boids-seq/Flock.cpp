@@ -31,11 +31,11 @@ void Flock::breed_boids(){
 void Flock::insert_boid(int x, int y, int id){
   int cell;
 //Jak wyleci z pola, wraca z drugiej strony
-  if(x > field_size)
+  if(x >= field_size)
   {
     x -= field_size;
   }
-  if(y > field_size)
+  if(y >= field_size)
   {
     y -= field_size;
   }
@@ -50,16 +50,22 @@ void Flock::insert_boid(int x, int y, int id){
 
 void Flock::update_flock(double time){
   rebuild_table();
+  printf("=====================================================\n");
   vector<int> near_boids;
   for(int i=0; i<size; i++){
+    printf("Update for boid: %d\n",i);
     near_boids.clear();
     near_boids = find_near(flock[i].get_position().x, flock[i].get_position().y, i);
     neighbours[i] = near_boids;
+    printf("found near: %d\n",i);
     for(int j=0; j < near_boids.size(); j++){
       flock[i].interact(flock[near_boids[j]]);
     }
+    printf("nteractions: %d\n",i);
     flock[i].sum_forces(near_boids.size());
-    flock[i].update(time);
+    printf("sum forces %d\n",i);
+    flock[i].update(time, field_size);
+    printf("updated position %d\n",i);
     near_boids.clear();
   }
 }
@@ -111,12 +117,13 @@ vector<int> Flock::find_near(int x, int y, int id){
 }
 
 void Flock::rebuild_table(){
-  
   for(int i=0; i<row_size*row_size; i++){
     cell_boid_table[i].clear();
   }
   for(int i=0; i<size; i++){
     neighbours[i].clear();
+    printf("nserting boid %d, %d\n", flock[i].get_position().x, flock[i].get_position().y); 
     insert_boid(flock[i].get_position().x, flock[i].get_position().y, i);  
+    printf("inserted boid %d\n", i); 
   }
 }
