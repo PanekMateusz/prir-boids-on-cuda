@@ -16,7 +16,7 @@ void print_flock(Flock f){//debbuging purpose
 
 void write_frame(Flock *f){
 //wspolrzedne x
-  json << "\"boids\": {\n \"x\": [";
+  json << "[\"boids\": {\n \"x\": [";
   for(int i=0; i<NUM_BOIDS; i++){
     json << (*f).flock[i].get_position().x;
     if(i< NUM_BOIDS-1)
@@ -45,7 +45,7 @@ void write_frame(Flock *f){
     }
     json << "],\n";
   }
-  json << "],\n},\n";
+  json << "]\n},\n";
 //forces
   json << "\"forces\": {\n";
 //cohesion
@@ -66,7 +66,7 @@ void write_frame(Flock *f){
     if(i< NUM_BOIDS-1)
       json <<", ";
   }
-  json << "]\n}\n";
+  json << "]\n},\n";
 //separation
   json << "\"separation\": {\n";
    //wspolrzedne x
@@ -85,7 +85,7 @@ void write_frame(Flock *f){
     if(i< NUM_BOIDS-1)
       json <<", ";
   }
-  json << "]\n}\n";
+  json << "]\n},\n";
 //alignment
   json << "\"alignment\": {\n";
    //wspolrzedne x
@@ -104,7 +104,7 @@ void write_frame(Flock *f){
     if(i< NUM_BOIDS-1)
       json <<", ";
   }
-  json << "]\n}\n";
+  json << "]\n},\n";
 //velocity
   json << "\"velocity\": {\n";
    //wspolrzedne x
@@ -123,7 +123,7 @@ void write_frame(Flock *f){
     if(i< NUM_BOIDS-1)
       json <<", ";
   }
-  json << "]\n}\n";
+  json << "]\n}\n}\n]";
 }
 
 int main(int argc, char** argv){
@@ -151,7 +151,7 @@ int main(int argc, char** argv){
 
   json.open ("animation.json");
   json << "{\n \"screen\": {\n \"width\": " << WINDOW_SIZE << ",\n \"height\": " << WINDOW_SIZE << "\n },\n";
-  json << "\"boids\": {\n \"count\": " << NUM_BOIDS << ",\n \"influance_range\": 32\n },\n \"frames\": [\n";
+  json << "\"boids\": {\n \"count\": " << NUM_BOIDS << ",\n \"influance_range\": 16\n },\n \"frames\":\n";
   gettimeofday(&start, NULL);
   
   for(int i=0; i<NUM_FRAMES; i++){
@@ -160,6 +160,10 @@ int main(int argc, char** argv){
 
     printf("write frame:%d\n", i); 
     write_frame(&flock);
+    if(i < NUM_FRAMES-1){
+      json << ",";
+    }
+    json << "\n";
     gettimeofday(&end, NULL);
     if(end.tv_sec - start.tv_sec >= MAX_TIME){
       break;
@@ -167,6 +171,7 @@ int main(int argc, char** argv){
     delta =(double)1/(double)60; //czas między klatkami jest stały(FPS). I tak nie wyświetlamy ich na bierząco
     
   }
+  json << "}";
   json.close();
   printf("Okno ma rozmiar: %dx%d, posiada %d boidów, pracuje max %ds lub aż wygeneruje %d klatek\n",WINDOW_SIZE, WINDOW_SIZE, NUM_BOIDS, MAX_TIME, NUM_FRAMES);
   return 1;
