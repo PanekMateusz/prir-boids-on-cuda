@@ -52,10 +52,8 @@ void Boid::sum_forces(int size){
 }
 
 void Boid::update(double time, int field){
-  acceleration.x *= time;  
-  acceleration.y *= time; 
-
-  velocity = velocity + acceleration;
+  velocity.x = velocity.x + (acceleration.x * time);
+  velocity.y = velocity.y + (acceleration.y * time);
 
   position.x += velocity.x * time; //nowe pozycje + upewnij się że zotajesz w polu
   if( position.x > field){
