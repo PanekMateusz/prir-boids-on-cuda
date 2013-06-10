@@ -46,8 +46,8 @@ void Boid::sum_forces(int size){
 
   Vector2D force = separate_force + cohesion_force + align_force;
 
-  acceleration.x *= 0.5;
-  acceleration.y *= 0.5;
+  acceleration.x *= 0.2;
+  acceleration.y *= 0.2;
   acceleration = acceleration + force;
 }
 
@@ -58,13 +58,13 @@ void Boid::update(double time, int field){
   velocity = velocity + acceleration;
 
   position.x += velocity.x * time; //nowe pozycje + upewnij się że zotajesz w polu
-  if( position.x >= field){
+  if( position.x > field){
     position.x -= field;
   }else if( position.x < 0 ){
     position.x += field;
   }
   position.y += velocity.y * time;
-  if( position.y >= field){
+  if( position.y > field){
     position.y -= field;
   }else if( position.y < 0 ){
     position.y += field;
