@@ -18,8 +18,8 @@ void Flock::breed_boids(){
   srand(time(NULL));
 
   for(i=0; i<size; i++){
-    int x = rand()%(field_size+1);
-    int y = rand()%(field_size+1);
+    double x = rand()%(field_size+1);
+    double y = rand()%(field_size+1);
     Boid b (x, y); 
     flock[i] = b;
     //insert_boid(x, y, i);
@@ -28,7 +28,7 @@ void Flock::breed_boids(){
   }
 }
 
-void Flock::insert_boid(int x, int y, int id){
+void Flock::insert_boid(double x, double y, int id){
   int cell;
 //Jak wyleci z pola, wraca z drugiej strony
   if(x >= field_size)
@@ -40,8 +40,8 @@ void Flock::insert_boid(int x, int y, int id){
     y -= field_size;
   }
 //oczko zawierające boida
-  y = y/CELL_SIZE;
-  x = x/CELL_SIZE;
+  y = (int)(y/CELL_SIZE);
+  x = (int)(x/CELL_SIZE);
 
   cell = y*row_size+x;
 //umieść w tablicy cell/boid
@@ -65,10 +65,10 @@ void Flock::update_flock(double time){
   }
 }
 
-vector<int> Flock::find_near(int x, int y, int id){
+vector<int> Flock::find_near(double x, double y, int id){
   int cell_i, cell_j;
   vector<int> n_b;
-  int cell = (y/CELL_SIZE)*row_size+(x/CELL_SIZE);
+  int cell = (int)(y/CELL_SIZE)*row_size+(int)(x/CELL_SIZE);
   int i = cell/row_size;
   int j = cell- (i*row_size);
   i--;

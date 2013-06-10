@@ -1,6 +1,6 @@
 #include "Structures.h"
  
-  Point2D::Point2D(int a, int b)
+  Point2D::Point2D(double a, double b)
   {
     x = a;
     y = b;

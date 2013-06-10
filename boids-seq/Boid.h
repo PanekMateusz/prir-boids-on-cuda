@@ -21,7 +21,7 @@ class Boid{
 
   public:
     Boid(){};
-    Boid(int, int);
+    Boid(double, double);
     Point2D get_position(){return position; };
     Vector2D get_velocity(){return velocity; };
     void interact(Boid);

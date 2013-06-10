@@ -9,7 +9,7 @@ ofstream json;
 
 void print_flock(Flock f){//debbuging purpose
   for(int i=0; i<NUM_BOIDS; i++){
-    printf("B%d: x:%d, y:%d\n",i, f.flock[i].get_position().x, f.flock[i].get_position().y);
+    printf("B%d: x:%d, y:%d\n",i, (int)f.flock[i].get_position().x, (int)f.flock[i].get_position().y);
     
   }
 }
@@ -18,7 +18,7 @@ void write_frame(Flock *f){
 //wspolrzedne x
   json << "[ \"boids\": {\n \"x\": [ ";
   for(int i=0; i<NUM_BOIDS; i++){
-    json << (*f).flock[i].get_position().x;
+    json << (int)((*f).flock[i].get_position().x);
     if(i< NUM_BOIDS-1)
       json <<", ";
   }
@@ -27,7 +27,7 @@ void write_frame(Flock *f){
 //wspolrzedne y
   json << "\"y\": [ ";
   for(int i=0; i<NUM_BOIDS; i++){
-    json << (*f).flock[i].get_position().y;
+    json << (int)((*f).flock[i].get_position().y);
     if(i< NUM_BOIDS-1)
       json <<", ";
   }
@@ -147,8 +147,7 @@ int main(int argc, char** argv){
 
   Flock flock (WINDOW_SIZE, NUM_BOIDS);
   struct timeval start, end;
-  double delta = 0;
-
+  double delta =1.0/60.0; //czas między klatkami jest stały(FPS). I tak nie wyświetlamy ich na bierząco
   json.open ("animation.json");
   json << "{\n \"screen\": {\n \"width\": " << WINDOW_SIZE << ",\n \"height\": " << WINDOW_SIZE << "\n },\n";
   json << "\"boids\": {\n \"count\": " << NUM_BOIDS << ",\n \"influance_range\": 16\n },\n \"frames\":\n";
@@ -168,7 +167,6 @@ int main(int argc, char** argv){
     if(end.tv_sec - start.tv_sec >= MAX_TIME){
       break;
     }
-    delta =(double)1/(double)60; //czas między klatkami jest stały(FPS). I tak nie wyświetlamy ich na bierząco
     
   }
   json << "}";

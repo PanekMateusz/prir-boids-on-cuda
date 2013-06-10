@@ -25,8 +25,8 @@ class Flock {
     void update_flock(double);
   private:
     void breed_boids();
-    void insert_boid(int,int,int);
-    vector<int> find_near(int, int, int);
+    void insert_boid(double,double,int);
+    vector<int> find_near(double, double, int);
     void rebuild_table();
 };
 #endif

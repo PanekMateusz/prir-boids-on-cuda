@@ -27,10 +27,10 @@ public:
 class Point2D
 {
 public:
-  int x;
-  int y;
+  double x;
+  double y;
   Point2D(){};
-  Point2D(int , int );
+  Point2D(double , double );
   Point2D operator+ (Point2D &addend) {return Point2D(x+addend.x, y+addend.y); };  
 };
 
