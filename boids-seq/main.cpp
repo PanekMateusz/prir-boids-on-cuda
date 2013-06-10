@@ -16,26 +16,26 @@ void print_flock(Flock f){//debbuging purpose
 
 void write_frame(Flock *f){
 //wspolrzedne x
-  json << "[\"boids\": {\n \"x\": [";
+  json << "[ \"boids\": {\n \"x\": [ ";
   for(int i=0; i<NUM_BOIDS; i++){
     json << (*f).flock[i].get_position().x;
     if(i< NUM_BOIDS-1)
       json <<", ";
   }
-  json << "],\n";
+  json << " ],\n";
 
 //wspolrzedne y
-  json << "\"y\": [";
+  json << "\"y\": [ ";
   for(int i=0; i<NUM_BOIDS; i++){
     json << (*f).flock[i].get_position().y;
     if(i< NUM_BOIDS-1)
       json <<", ";
   }
-  json << "],\n";
+  json << " ],\n";
 //sasiedzi
-  json << "\"neighbours\": [\n";
+  json << "\"neighbours\": [ \n";
   for(int i=0; i<NUM_BOIDS; i++){
-    json << "[";
+    json << "[ ";
     if( (*f).neighbours[i].empty() == false ){
       for(int j=0; j<(*f).neighbours[i].size(); j++){
         json << (*f).neighbours[i][j];
@@ -43,87 +43,87 @@ void write_frame(Flock *f){
           json <<", ";
       }
     }
-    json << "],\n";
+    json << " ],\n";
   }
-  json << "]\n},\n";
+  json << " ]\n},\n";
 //forces
   json << "\"forces\": {\n";
 //cohesion
   json << "\"cohesion\": {\n";
    //wspolrzedne x
-  json << "\"x\": [";
+  json << "\"x\": [ ";
   for(int i=0; i<NUM_BOIDS; i++){
     json << (*f).flock[i].cohesion_force.x;
     if(i< NUM_BOIDS-1)
       json <<", ";
   }
-  json << "],\n";
+  json << " ],\n";
 
 //wspolrzedne y
-  json << "\"y\": [";
+  json << "\"y\": [ ";
   for(int i=0; i<NUM_BOIDS; i++){
     json << (*f).flock[i].cohesion_force.y;
     if(i< NUM_BOIDS-1)
       json <<", ";
   }
-  json << "]\n},\n";
+  json << " ]\n},\n";
 //separation
   json << "\"separation\": {\n";
    //wspolrzedne x
-  json << "\"x\": [";
+  json << "\"x\": [ ";
   for(int i=0; i<NUM_BOIDS; i++){
     json << (*f).flock[i].separate_force.x;
     if(i< NUM_BOIDS-1)
       json <<", ";
   }
-  json << "],\n";
+  json << " ],\n";
 
 //wspolrzedne y
-  json << "\"y\": [";
+  json << "\"y\": [ ";
   for(int i=0; i<NUM_BOIDS; i++){
     json << (*f).flock[i].separate_force.y;
     if(i< NUM_BOIDS-1)
       json <<", ";
   }
-  json << "]\n},\n";
+  json << " ]\n},\n";
 //alignment
   json << "\"alignment\": {\n";
    //wspolrzedne x
-  json << "\"x\": [";
+  json << "\"x\": [ ";
   for(int i=0; i<NUM_BOIDS; i++){
     json << (*f).flock[i].align_force.x;
     if(i< NUM_BOIDS-1)
       json <<", ";
   }
-  json << "],\n";
+  json << " ],\n";
 
 //wspolrzedne y
-  json << "\"y\": [";
+  json << "\"y\": [ ";
   for(int i=0; i<NUM_BOIDS; i++){
     json << (*f).flock[i].align_force.y;
     if(i< NUM_BOIDS-1)
       json <<", ";
   }
-  json << "]\n},\n";
+  json << " ]\n},\n";
 //velocity
   json << "\"velocity\": {\n";
    //wspolrzedne x
-  json << "\"x\": [";
+  json << "\"x\": [ ";
   for(int i=0; i<NUM_BOIDS; i++){
     json << (*f).flock[i].velocity.x;
     if(i< NUM_BOIDS-1)
       json <<", ";
   }
-  json << "],\n";
+  json << " ],\n";
 
 //wspolrzedne y
-  json << "\"y\": [";
+  json << "\"y\": [ ";
   for(int i=0; i<NUM_BOIDS; i++){
     json << (*f).flock[i].velocity.y;
     if(i< NUM_BOIDS-1)
       json <<", ";
   }
-  json << "]\n}\n}\n]";
+  json << " ]\n}\n}\n ]";
 }
 
 int main(int argc, char** argv){
