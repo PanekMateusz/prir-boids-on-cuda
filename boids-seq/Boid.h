@@ -27,5 +27,6 @@ class Boid{
     void interact(Boid);
     void sum_forces(int);
     void update(double, int);
+    void reset_forces();
 };
 #endif

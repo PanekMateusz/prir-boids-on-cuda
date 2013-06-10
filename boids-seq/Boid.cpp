@@ -11,14 +11,13 @@ Boid::Boid(int x, int y){
   cohesion_sum = Point2D(0, 0);
   cohesion_force = Vector2D(0, 0);
 }
-
-void Boid::interact(Boid b){
-
+void Boid::reset_forces(){
   separate_force = Vector2D(0, 0);
   align_force = Vector2D(0, 0);
   cohesion_sum = Point2D(0, 0);
   cohesion_force = Vector2D(0, 0);
-
+}
+void Boid::interact(Boid b){
   Vector2D diff (position.x - b.get_position().x , position.y - b.get_position().y);
 
   cohesion_sum.x += b.get_position().x;
@@ -47,8 +46,8 @@ void Boid::sum_forces(int size){
 
   Vector2D force = separate_force + cohesion_force + align_force;
 
-  acceleration.x *= 0.2;
-  acceleration.y *= 0.2;
+  acceleration.x *= 0.5;
+  acceleration.y *= 0.5;
   acceleration = acceleration + force;
 }
 

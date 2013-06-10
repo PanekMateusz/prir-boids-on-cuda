@@ -55,6 +55,7 @@ void Flock::update_flock(double time){
     near_boids.clear();
     near_boids = find_near(flock[i].get_position().x, flock[i].get_position().y, i);
     neighbours[i] = near_boids;
+    flock[i].reset_forces();
     for(int j=0; j < near_boids.size(); j++){
       flock[i].interact(flock[near_boids[j]]);
     }
